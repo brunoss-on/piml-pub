@@ -1,109 +1,101 @@
-# Project instructions
+# Project Guidelines
 
-## Main references
+## Overview
 
-- Jin, Peng, Xitong Zhang, Yinpeng Chen, Sharon Xiaolei Huang, Zicheng Liu, and Youzuo Lin. 2021. “Unsupervised Learning of Full-Waveform Inversion: Connecting CNN and Partial Differential Equation in a Loop.” http://arxiv.org/abs/2110.07584.
+This project focuses on the development and application of computational methods in geophysics, with an emphasis on reproducible workflows and scientific programming.
 
 
+## Main Reference
+
+- Jin, P., Zhang, X., Chen, Y., Huang, S. X., Liu, Z., and Lin, Y. 2021. “Unsupervised Learning of Full-Waveform Inversion: Connecting CNN and Partial Differential Equation in a Loop.” arXiv:2110.07584.
 ---
 
-## Development instructions
+## Development Environment
 
-This project can be developed either using **Google Colab** or on your **local machine**.
+You may choose one of the following:
 
-### Choose your development environment
+- **Google Colab** → recommended for quick start and zero setup  
+- **Local machine (recommended)** → better control and reproducibility  
 
-- **Google Colab** → for quick start and minimal setup  
-- **Local machine** (recommended) → for more control and advanced development  
+In all cases:
 
-In all cases, make sure you are working on **your own branch** and commit your changes regularly.  
+- Work **only on your own branch**
+- Commit your progress regularly
+- Keep your code organized and reproducible
+
 ---
 
 ## 1. Google Colab
 
-If you prefer a quick setup without installing anything locally, use **Google Colab**.
+Use this option if you prefer not to install anything locally.
 
-Organize your notebook as follows:
+For consistency and reproducibility, **organize your notebook with the following structure**:
 
-- **First cell**: repository setup (Git + clone + navigation)  
-- **Second cell**: install project dependencies  
-- **Last cell**: commit and push your changes  
+- **First cell** → repository setup (Git configuration and clone)  
+- **Second cell** → dependency installation  
+- Remaining cells → development and experiments  
+- Final cell → commit and push your changes  
 
 ---
 
 ### First cell: repository setup
 
-It is assumed that each student has already created their **own working branch** following the instructions in the root repository (`piml-pub/README.md`).
-
 ```python
-# Configure Git (needed once per Colab session)
 !git config --global user.name "Your Name"
 !git config --global user.email "your.email@example.com"
 
-# Clone your own branch
-!git clone -b your-branch-name --single-branch https://github.com/brunoss-on/piml-pub.git
+!git clone -b your-branch-name --single-branch https://github.com/your-repo-url.git
 
-# Enter the repository directory
-%cd piml-pub
-
-# List files
+%cd your-repo-name
 !ls
 ````
 
 ---
 
-### Second cell: install project dependencies
+### Second cell: install dependencies
 
-Example for projects using `deepwave`:
+> Replace with project-specific dependencies if needed.
 
 ```python
-# Install project-specific dependencies
 !pip install deepwave==0.0.22
 ```
 
 ---
 
-### Continue your development
+### Development
 
-After setup, proceed normally with your notebook.
+* Organize your code clearly
+* Document your steps
+* Structure your experiments
 
 ---
 
-### Last cell: saving your work (commit and push)
+### Final cell: save and push your work
 
 ```python
-# Ensure you are inside the repository
-%cd /content/piml-pub
+%cd /content/your-repo-name
 
-# Check changes
 !git status
-
-# Add changes
 !git add .
-
-# Commit
 !git commit -m "Update notebook"
-
-# Push to your branch
 !git push origin your-branch-name
 ```
 
 ---
 
-## 2. Local development
+## 2. Local Development (Recommended)
 
-These instructions assume that **Conda is already installed** on your computer.
+### Requirements
 
-If Conda is not installed, install **Miniconda** using the official guide:
-[https://www.anaconda.com/docs/getting-started/miniconda/install/linux-install](https://www.anaconda.com/docs/getting-started/miniconda/install/linux-install)
+* Conda (Miniconda or Anaconda)
 
 ---
 
 ### Why use a dedicated environment?
 
-* isolates project dependencies from your system
-* avoids version conflicts with other projects
-* improves reproducibility across different machines
+* isolates dependencies
+* avoids version conflicts
+* ensures reproducibility
 
 ---
 
@@ -111,13 +103,13 @@ If Conda is not installed, install **Miniconda** using the official guide:
 
 Inside **your branch** and within the project subdirectory, define an `environment.yml` file with the project dependencies.
 
-- Keep all project dependencies updated and documented in the `environment.yml` file
+> Keep all project dependencies updated and documented in the `environment.yml` file
+> Adapt dependencies according to the project.
 
-
-Example for projects using `deepwave`:
+Example:
 
 ```yaml
-name: deepwave-lab
+name: project-env
 channels:
   - conda-forge
   - defaults
@@ -162,15 +154,14 @@ dependencies:
 
 ---
 
-### Optional: Makefile for environment management 
+### Makefile for environment management (Optional)
 
 Use the following `Makefile` to create, update, or remove the Conda environment.  
-Remember to replace `ENV_NAME ?= deepwave-lab` with the name of the environment defined in your `environment.yml` file.
 
 ```makefile
 SHELL := /bin/bash
 ENV_FILE ?= environment.yml
-ENV_NAME ?= deepwave-lab
+ENV_NAME ?= project-env
 
 .PHONY: env-create env-update env-remove
 
@@ -190,16 +181,14 @@ env-remove:
 
 ```bash
 make env-create
-conda activate deepwave-lab
+conda activate project-env
 make env-update
 make env-remove
 ```
 
 ---
 
-## Recommended day-to-day git workflow
-
-After your branch has already been created, the usual workflow is:
+## Git Workflow
 
 ```bash
 git checkout your-branch-name
@@ -210,4 +199,14 @@ git commit -m "Describe your changes"
 git push
 ```
 
+---
 
+## Good Practices
+
+* Keep notebooks clean and well-structured
+* Avoid committing unnecessary files
+* Document experiments and assumptions
+* Use meaningful commit messages
+* Keep dependencies updated
+
+---

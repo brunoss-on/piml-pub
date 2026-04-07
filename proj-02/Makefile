@@ -1,7 +1,7 @@
 # Minimal Makefile for a conda env defined in environment.yml
 SHELL := /bin/bash
 ENV_FILE ?= environment.yml
-ENV_NAME ?= deepwave-lab
+ENV_NAME ?= project-env
 CONDA_BASE := $(shell conda info --base 2>/dev/null)
 
 .PHONY: env-create env-update env-remove

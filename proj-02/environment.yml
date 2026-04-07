@@ -1,4 +1,4 @@
-name: deepwave-lab
+name: project-env
 channels:
   - conda-forge
   - defaults

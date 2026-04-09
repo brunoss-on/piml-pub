@@ -40,7 +40,7 @@ After cloning the repository, create a branch with your name and the project you
 Example:
 
 ```bash
-git checkout -b proj-01-your-name
+git checkout -b student-name/proj-01
 ```
 
 This command creates your branch and switches you to it.
@@ -58,7 +58,7 @@ The current branch appears with `*`.
 Example:
 
 ```bash
-* proj-01-bruno
+* bruno/proj-01
   main
 ```
 

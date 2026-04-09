@@ -10,11 +10,12 @@ This project focuses on the development and application of computational methods
 - Jin, P., Zhang, X., Chen, Y., Huang, S. X., Liu, Z., and Lin, Y. 2021. “Unsupervised Learning of Full-Waveform Inversion: Connecting CNN and Partial Differential Equation in a Loop.” arXiv:2110.07584.
 ---
 
+
 ## Development Environment
 
 You may choose one of the following:
 
-- **Google Colab** → recommended for quick start and zero setup  
+- **Google Colab** 
 - **Local machine (recommended)** → better control and reproducibility  
 
 In all cases:
@@ -25,61 +26,75 @@ In all cases:
 
 ---
 
-## 1. Google Colab
+## 1. Google Colab (Simplified Workflow)
 
-Use this option if you prefer not to install anything locally.
+### Step 1. Create your branch on GitHub
 
-For consistency and reproducibility, **organize your notebook with the following structure**:
+Before opening Colab:
 
-- **First cell** → repository setup (Git configuration and clone)  
-- **Second cell** → dependency installation  
-- Remaining cells → development and experiments  
-- Final cell → commit and push your changes  
+1. Access the repository on GitHub
+2. Create a new branch for your work
+3. Use a clear and standardized naming convention:
 
----
+```text
+student-name/proj-number
+```
 
-### First cell: repository setup
+**Example:**
 
-```python
-!git config --global user.name "Your Name"
-!git config --global user.email "your.email@example.com"
-
-!git clone -b your-branch-name --single-branch https://github.com/your-repo-url.git
-
-%cd your-repo-name
-!ls
-````
-
----
-
-### Second cell: install dependencies
-
-> Replace with project-specific dependencies if needed.
-
-```python
-!pip install deepwave==0.0.22
+```text
+bruno/proj-01
 ```
 
 ---
 
-### Development
+### Step 2. Open the repository in Colab
 
-* Organize your code clearly
-* Document your steps
-* Structure your experiments
+1. Go to Google Colab
+2. Select the **GitHub** tab
+3. Search for the repository
+4. Choose **your branch** (not `main`)
+5. Open the notebook directly
 
 ---
 
-### Final cell: save and push your work
+### Step 3. Work inside the notebook
 
-```python
-%cd /content/your-repo-name
+To ensure **consistency and reproducibility**, follow this structure:
 
-!git status
-!git add .
-!git commit -m "Update notebook"
-!git push origin your-branch-name
-```
+* **First cell → Environment setup**
+
+  * Install all dependencies (`pip install`, etc.)
+  * Configure any required settings
+
+* **Second cell → Data access**
+
+  * Ensure all required datasets are available
+  * Recommended options:
+
+    * Google Drive (for large datasets)
+    * Repository files (for small datasets)
+
+* **Remaining cells → Development**
+
+  * Keep code organized and modular
+  * Clearly document your steps
+  * Structure experiments in a logical sequence
+
+---
+
+### Step 4. Save and commit your work
+
+When finishing your session:
+
+1. In Colab, go to **File → Save**
+2. Select:
+
+   * The  **repository**
+   * Your **branch**
+   * The notebook file to update
+3. Add a clear and descriptive **commit message**
+4. Enable the option **Include a link to colab**
 
 ---
 

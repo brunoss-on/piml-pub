@@ -1,0 +1,34 @@
+name: deepwave-lab
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  # core 
+  - python=3.10
+  - pip 
+  # essentials
+  - numpy
+  - scipy
+  - matplotlib
+  - pandas
+  - pyyaml
+  - pillow
+  - tqdm
+  - ipython
+  - jupyterlab
+  - ipykernel
+  - ipywidgets
+  # notebook diff/merge
+  - nbdime
+  # seismic tools
+  - segyio         
+  - obspy         
+  - pip:
+      # PyTorch family 
+      - torch==2.8.*
+      - torchvision==0.23.*
+      # Deepwave (explicit pin)
+      - deepwave==0.0.22
+      # utilities
+      - sympy
+      - torchsummary

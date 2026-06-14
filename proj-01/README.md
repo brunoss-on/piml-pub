@@ -225,3 +225,56 @@ git push
 * Keep dependencies updated
 
 ---
+
+## Architectural Documentation: PINN for FWI (Charles Lima's notes)
+Reference: Rasht-Behesht, M., Huber, C., Shukla, K., and Karniadakis, G. E. (2022).
+
+1. What We Adopted (The Theoretical Core)
+Our implementation perfectly preserves the mathematical foundation proposed by the authors:
+
+Coordinate-Based Parameterization: Instead of updating a discrete grid of velocity values directly (as in classical FWI), we use a Multilayer Perceptron (MLP) to map continuous spatial coordinates (x, z) to the velocity field v(x, z). The neural network itself acts as the velocity model.
+
+Physics-Informed Regularization: We are utilizing the PyTorch Autograd engine to compute the spatial derivatives. This allows the network to be constrained not just by the seismic data, but by the physical laws governing acoustic wave propagation.
+
+Composite Loss Function: Our optimization process follows the paper's dual-objective approach, simultaneously minimizing:
+Loss = Loss_data + (lambda * Loss_PDE)
+
+2. What We Adjusted (The Hybrid Escalation)
+While the paper demonstrates the PINN's ability to solve both the forward and inverse problems purely through neural networks via collocation points, we introduced a strategic engineering adjustment to handle the specific bottleneck of high-frequency data and multiple shots:
+
+The Deepwave Integration: Pure PINNs struggle with spectral bias and massive memory consumption when calculating the transient wavefield u(t, x, z) over thousands of time steps. To solve this, our architecture is a Hybrid Data-Driven PINN (DDR-PINN).
+
+The Division of Labor: We use the PINN to parameterize and optimize the velocity macro-model v(x, z). However, we offload the heavy lifting of the time-domain wave propagation (the forward problem to compute Loss_data) to Deepwave, which uses highly optimized finite-difference solvers.
+
+The Justification: This adjustment maintains the exact physical constraints proposed by Rasht-Behesht et al. while allowing our code to scale to the 5-shot OpenFWI geometry without immediately crashing standard hardware.
+
+Code Documentation Standards: Traceability & Reference Tracking
+To ensure scientific rigor and transparent methodology, all codebase developments within this repository employ a mandatory dual-tagging system within the inline comments. This system explicitly maps our engineering choices to the primary theoretical framework:
+
+[Rasht-Behesht 2022 Compliance]: Indicates where the implementation strictly follows the original mathematical or theoretical foundation proposed by the authors.
+
+[Rasht-Behesht 2022 Adaptation]: Indicates where we intentionally diverge from the original paper to optimize for High-Performance Computing (HPC), manage VRAM memory bottlenecks, or ensure numerical stability.
+
+Inversion Strategy: Step 1 (Acoustic Forward Stress Test)The first phase of this repository validates the forward acoustic wave propagation and backpropagation (autograd) mechanics before introducing the complex optimization loops required for FWI.
+
+To ensure mathematical rigor and justify our architectural choices, we have implemented two parallel baselines for Step 1. This ablation study compares the theoretical ideal against a computationally optimized approach.
+
+1. The Theoretical Baseline (pure_pinn_baseline.ipynb)
+
+* Methodology: 100% compliant with the original methodology proposed by Rasht-Behesht et al. (2022).
+  
+* Architecture: Utilizes two separate continuous Neural Networks (MLPs): one to approximate the transient wavefield u(t, x, z) and another for the velocity model v(x, z).
+  
+* Data Ingestion: Integrates a vectorized PyTorch data loader to directly ingest the original SPECFEM2D training data (wavefield snapshots and surface seismograms) provided by the authors, ensuring an identical ground-truth comparison.
+  
+* Purpose: To validate the elegance of pure Physics-Informed Neural Networks where the acoustic wave equation is solved purely by penalizing the PDE residual via PyTorch Automatic Differentiation (Autograd) on random collocation points.
+
+2. The HPC-Optimized Evolution (pinn_inversion_step1.ipynb)
+
+* Methodology: A Hybrid Data-Driven PINN (DDR-PINN).
+
+* Architecture: Explicitly diverges from the pure PINN by offloading the continuous wavefield approximation to Deepwave (a PyTorch-native finite-difference solver). It retains the dense discrete grid v(x,z) which acts as the optimizable tensor, with requires_grad=True forcing the GPU to track the full computational graph.
+
+* Hardware Scaling: Implements pure, unadulterated tensor parallelization, processing the entire multi-source array (5+ shots) simultaneously on the GPU's Streaming Multiprocessors.
+
+* Purpose: To solve the severe computational and spectral bias bottlenecks of pure PINNs. By using Deepwave for the forward pass, we bypass the need for millions of collocation points, enabling the processing of high-frequency seismic data at scale without crashing local VRAM limits.

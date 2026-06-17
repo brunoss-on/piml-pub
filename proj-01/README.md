@@ -278,3 +278,24 @@ Building upon the hybrid architecture established in Phase 1, Step 2 executes th
 * **Mechanism:** The architecture iteratively updates a dense, trainable velocity grid (`v_inverted`) by minimizing the Mean Squared Error (MSE) between the Deepwave-generated synthetic seismograms and the observed SPECFEM2D surface data.
 * **[Rasht-Behesht 2022 Compliance]:** The gradients computed via the PyTorch Autograd engine on the Deepwave output directly mirror the data mismatch gradient calculation in the original PINN formulation.
 * **Validation:** The loop includes a physical constraint to bound velocity updates between 1500 m/s and 5500 m/s. Convergence is tracked via a customized visualization dashboard that plots the logarithmic loss trajectory, the observed surface wavefields, and the inverted structural velocity model for direct cross-referencing with the Rasht-Behesht ground truth.
+
+---
+
+### Phase 3: Benchmarking & Scaling Analysis (The Ablation Study)
+To empirically validate the architectural necessity of the Hybrid DDR-PINN, this repository includes a rigorous benchmarking suite. The objective is to replicate the foundational success of Rasht-Behesht et al. (2022) and subsequently expose the theoretical limitations of pure continuous neural networks when scaling to industrial seismic applications.
+
+**1. Experiment A: Foundational Baseline (The Control)**
+* **Objective:** Replicate the original authors' results to validate our Pure PINN implementation (`pure_pinn_baseline.ipynb`).
+* **Parameters:** Low-frequency source wavelets (< 10Hz), single-shot geometry, small computational domains, and smoothed velocity anomalies.
+* **Hypothesis:** The Pure PINN will successfully converge, mapping the acoustic wavefield and reconstructing the velocity model, confirming the viability of the authors' proof-of-concept.
+
+**2. Experiment B: Industrial Stress Test (The Spectral Bias Barrier)**
+* **Objective:** Subject both the Pure PINN and the Hybrid DDR-PINN to real-world complexities to evaluate scaling endurance.
+* **Parameters:** High-frequency source wavelets (15Hz - 30Hz Ricker), complex geological structures (Marmousi slices), and simultaneous multi-shot geometries.
+* **Hypothesis:** The Pure PINN will exhibit severe *spectral bias*, resulting in a plateaued loss landscape (stagnant convergence) and unsustainable VRAM allocation due to the exponential collocation points required. Conversely, the DDR-PINN (`pinn_inversion_step2.ipynb`) will bypass this bottleneck via Deepwave's finite-difference forward solver, maintaining stable convergence and memory efficiency.
+
+**3. Evaluation Metrics**
+The comparative analysis relies on strict quantitative tracking:
+* **Computational Footprint:** Peak VRAM (GB) and System RAM utilization per epoch.
+* **Temporal Efficiency:** Wall-clock time required to reach a baseline Mean Squared Error (MSE).
+* **Gradient Trajectory:** Tracking the divergence in loss curves to explicitly visualize the onset of spectral bias in the Pure PINN architecture.

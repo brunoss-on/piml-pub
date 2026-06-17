@@ -89,8 +89,9 @@ ipython_config.py
 # outputs/
 # figures/
 
-# Hardware Profiling Telemetry
+# Hardware Profiling Telemetry (GPU's memory test artifact)
 *.nsys-rep
 *.sqlite
 *.qdstrm
 *vram_trace.json
+fwi_profiler.py

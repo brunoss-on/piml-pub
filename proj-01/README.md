@@ -299,3 +299,13 @@ The comparative analysis relies on strict quantitative tracking:
 * **Computational Footprint:** Peak VRAM (GB) and System RAM utilization per epoch.
 * **Temporal Efficiency:** Wall-clock time required to reach a baseline Mean Squared Error (MSE).
 * **Gradient Trajectory:** Tracking the divergence in loss curves to explicitly visualize the onset of spectral bias in the Pure PINN architecture.
+
+### 4. Empirical Validation: Spectral Bias & The DDR-PINN Justification
+**The Theoretical Ideal (Rasht-Behesht et al., 2022)**
+The foundational paper successfully demonstrates that Full Waveform Inversion can be solved entirely via continuous coordinate-based neural networks. However, resolving high-frequency structural boundaries (overcoming spectral bias) required massive epoch counts (20,000+) and computationally expensive second-order L-BFGS optimization on enterprise-grade hardware.
+
+**The Industrial Reality Check (Our Baseline)**
+When constrained to a practical industrial compute timeframe (500 epochs, Adam optimizer), the Pure PINN architecture immediately exhibits severe spectral bias. As documented in our Phase A proofs, the network successfully maps low-frequency global velocity trends but entirely fails to resolve the high-frequency acoustic wavefield, resulting in a fundamentally blurred structural inversion.
+
+**The Hybrid DDR-PINN Solution**
+To deploy FWI at scale without requiring supercomputers or L-BFGS optimization, the spectral bias must be bypassed entirely. The DDR-PINN architecture achieves this by offloading the high-frequency multi-shot wave propagation to Deepwave (a rigorous finite-difference solver) while utilizing the neural network exclusively to optimize the velocity macro-model. This dramatically accelerates convergence and preserves sharp structural resolution.

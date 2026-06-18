@@ -309,3 +309,23 @@ When constrained to a practical industrial compute timeframe (500 epochs, Adam o
 
 **The Hybrid DDR-PINN Solution**
 To deploy FWI at scale without requiring supercomputers or L-BFGS optimization, the spectral bias must be bypassed entirely. The DDR-PINN architecture achieves this by offloading the high-frequency multi-shot wave propagation to Deepwave (a rigorous finite-difference solver) while utilizing the neural network exclusively to optimize the velocity macro-model. This dramatically accelerates convergence and preserves sharp structural resolution.
+
+### 5. Phase 2 Inversion: The Cycle Skipping Limitation and Multi-Scale Requisite
+
+**The 25Hz High-Frequency Stress Test**
+Phase 2 evaluated the DDR-PINN's ability to invert a structural anomaly (2500 m/s) from a blind, homogeneous background (1500 m/s) using high-frequency 25Hz synthetic data. While the neural network successfully integrated with the Deepwave finite-difference engine and resolved the "dead gradient" trap via coordinate normalization, the inversion exposed a fundamental physical limitation of single-frequency FWI.
+
+**The Cycle Skipping Trap (Local Minimum)**
+Despite achieving a massive reduction in Mean Squared Error (MSE) loss (dropping from 0.344 to 0.006 in 150 epochs), the network entirely failed to reconstruct the subsurface anomaly. Because the 25Hz source generates short acoustic wavelengths, the time delay between the true wavefield and the predicted wavefield exceeded a half-wavelength. 
+
+Consequently, the optimizer suffered from **cycle skipping**. To minimize the MSE, the network bypassed the global minimum (the true geological structure) and converged into a local minimum, making microscopic, non-physical adjustments to the background velocity to falsely align the wrong wave peaks.
+
+**Architectural Next Steps: Multi-Scale Frequency Sweeping**
+This test proves that while the DDR-PINN bypasses the pure PINN's spectral bias, it remains bound by the kinematic laws of classical wave propagation. Brute-forcing high-frequency inversions from blind starting models is mathematically unviable. 
+
+To achieve true quantitative interpretation and structural resolution, the DDR-PINN architecture must be upgraded to a **Multi-Scale Inversion** framework:
+1. **Low-Frequency Pass (e.g., 5Hz):** Broad wavelengths map the global macro-model without cycle skipping.
+2. **Mid-Frequency Pass (e.g., 15Hz):** Uses the 5Hz output to refine structural boundaries.
+3. **High-Frequency Pass (e.g., 25Hz):** Uses the 15Hz output to lock in razor-sharp seismic facies classifications.
+
+This multi-scale frequency sweep will be the focus of the next R&D development cycle.

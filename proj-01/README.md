@@ -226,6 +226,7 @@ git push
 
 ---
 ## Architectural Documentation: PINN for FWI (Charles Lima's notes)
+
 **Reference:** Rasht-Behesht, M., Huber, C., Shukla, K., and Karniadakis, G. E. (2022). *Physics-Informed Neural Networks (PINNs) for Wave Propagation and Full Waveform Inversions.*
 
 ### 1. What We Adopted (The Theoretical Core)

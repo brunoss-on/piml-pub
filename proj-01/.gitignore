@@ -95,3 +95,6 @@ ipython_config.py
 *.qdstrm
 *vram_trace.json
 fwi_profiler.py
+
+# Private Governance Ledgers
+pci_governance_private.md

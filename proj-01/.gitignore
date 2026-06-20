@@ -1,53 +1,41 @@
-# =========================
-# Python
-# =========================
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
+# ==========================================
+# 1. GEOPHYSICS DATA & LARGE ARRAYS (CRITICAL)
+# ==========================================
+# GitHub will reject massive files.
+vp_marmousi-ii/
+data/
+docs/
+*.segy
+*.sgy
+*.npy
+*.npz
+*.bin
+*.mat
+*.h5
 
-# =========================
-# Jupyter Notebook
-# =========================
+# Optional: Track tiny 1D arrays if needed, otherwise ignore
+data_rasht_behesht_2022/
+
+# ==========================================
+# 2. DEEP LEARNING & PYTORCH ARTIFACTS
+# ==========================================
+# Ignore saved neural network weights and logs
+*.pt
+*.pth
+runs/
+lightning_logs/
+*.nsys-rep
+*.sqlite
+*.qdstrm
+*vram_trace.json
+
+# ==========================================
+# 3. JUPYTER & PYTHON ENVIRONMENT
+# ==========================================
 .ipynb_checkpoints/
-
-# =========================
-# Environments
-# =========================
-.venv/
-venv/
-env/
-ENV/
-
-# Conda
-.conda/
-conda-meta/
-
-# =========================
-# IDEs and editors
-# =========================
-.vscode/
-.idea/
-
-# =========================
-# Operating system files
-# =========================
-.DS_Store
-Thumbs.db
-
-# =========================
-# Logs and temporary files
-# =========================
-*.log
-*.tmp
-*.temp
-*.swp
-*.swo
-*~
-
-# =========================
-# Testing and coverage
-# =========================
+__pycache__/
+*.pyc
+*.pyo
 .pytest_cache/
 .coverage
 .coverage.*
@@ -55,46 +43,39 @@ htmlcov/
 .tox/
 .nox/
 
-# =========================
-# Build / packaging
-# =========================
+# Ignore virtual environments
+env/
+venv/
+project-env/
+.env
+.conda/
+conda-meta/
+
+# ==========================================
+# 4. OS GENERATED FILES & IDEs
+# ==========================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+.vscode/
+.idea/
+
+# ==========================================
+# 5. BUILD & PACKAGING
+# ==========================================
 build/
 dist/
 *.egg-info/
 .eggs/
 
-# =========================
-# Jupyter / IPython
-# =========================
-profile_default/
-ipython_config.py
-
-# =========================
-# Project-specific large or generated files
-# =========================
-*.h5
-*.hdf5
-*.npy
-*.npz
-*.segy
-*.sgy
-*.su
-
-# =========================
-# Optional: local data/results folders
-# Uncomment if appropriate
-# =========================
-# data/
-# results/
-# outputs/
-# figures/
-
-# Hardware Profiling Telemetry (GPU's memory test artifact)
-*.nsys-rep
-*.sqlite
-*.qdstrm
-*vram_trace.json
-fwi_profiler.py
-
-# Private Governance Ledgers
+# ==========================================
+# 6. SENSITIVE GOVERNANCE
+# ==========================================
 pci_governance_private.md
+
+# NOTE: We do NOT include 'figures/' or 'experiments/' here
+# so that Git continues to track your research progress.

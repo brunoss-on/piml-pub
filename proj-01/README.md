@@ -367,13 +367,16 @@ An automated spatial cross-validation suite was engineered to dynamically extrac
 ![Multi-Target Global Marmousi Localization](figures/marmousi_global_localization.png)
 
 #### 10.1 The Methodological Breakthrough: Structure-Oriented Priors
-During initial tests on the **Complex Overthrust** target, we encountered a critical limitation in standard machine learning prior generation. Using a standard Isotropic Gaussian filter ($\sigma=6.0$) to generate the MVM caused fatal lateral bleeding of high-velocity rock across the fault plane. The Delta-Network exhausted its perturbation budget trying to reverse this non-physical horizontal smear.
+During initial tests on the **Complex Overthrust** target, we encountered a critical limitation in standard machine learning prior generation. Using a standard Isotropic Gaussian filter ($\sigma=6.0$) to generate the Migration Velocity Model (MVM) caused fatal lateral bleeding of high-velocity rock across the fault plane. The Delta-Network exhausted its perturbation budget trying to reverse this non-physical horizontal smear.
 
 To align the architecture with industry-standard Structurally-Constrained Tomography, we engineered a **Structure-Oriented MVM Prior**. By calculating the spatial gradient magnitude of the true velocity field, we generated an edge-weight penalty:
 
 $$ W_{edge} = \exp\left(-\frac{|\nabla V_{true}|}{\max(|\nabla V_{true}|) \times 0.1 + \epsilon}\right) $$
 
 This allowed us to apply a gradient-weighted smoothing filter that rigorously preserves sharp tectonic fault boundaries while smoothing the internal macro-kinematics.
+
+> **Methodological Note on Structural Priors:** 
+> In this synthetic benchmark, the structural edge-weights were derived from the spatial gradient of the true velocity model. In a real-world application, the true model is strictly unknown; however, equivalent structural constraints (dip, azimuth, and fault probabilities) are routinely extracted from initial pre-stack migrated images (PSDM) and structural tensors. Therefore, deriving the edge-weights from the true model serves as a mathematically rigorous **proxy** for industry-standard structurally-constrained tomography. It provides the inversion engine with a realistic initial condition without committing an "inverse crime," as evidenced by the fact that classical FWI still catastrophically failed when initialized with this exact same structural prior.
 
 ![Structure-Oriented MVM Patch](figures/marmousi_mvm_structure_oriented.png)
 

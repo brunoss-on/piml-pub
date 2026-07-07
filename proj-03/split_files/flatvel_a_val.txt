@@ -1,0 +1,12 @@
+FlatVel_A/data/data49.npy	FlatVel_A/model/model49.npy
+FlatVel_A/data/data50.npy	FlatVel_A/model/model50.npy
+FlatVel_A/data/data51.npy	FlatVel_A/model/model51.npy
+FlatVel_A/data/data52.npy	FlatVel_A/model/model52.npy
+FlatVel_A/data/data53.npy	FlatVel_A/model/model53.npy
+FlatVel_A/data/data54.npy	FlatVel_A/model/model54.npy
+FlatVel_A/data/data55.npy	FlatVel_A/model/model55.npy
+FlatVel_A/data/data56.npy	FlatVel_A/model/model56.npy
+FlatVel_A/data/data57.npy	FlatVel_A/model/model57.npy
+FlatVel_A/data/data58.npy	FlatVel_A/model/model58.npy
+FlatVel_A/data/data59.npy	FlatVel_A/model/model59.npy
+FlatVel_A/data/data60.npy	FlatVel_A/model/model60.npy

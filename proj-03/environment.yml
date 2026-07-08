@@ -9,6 +9,8 @@ dependencies:
   # essentials
   - numpy
   - scipy
+  - scikit-learn
+  - scikit-image
   - matplotlib
   - pandas
   - pyyaml
@@ -32,3 +34,4 @@ dependencies:
       # utilities
       - sympy
       - torchsummary
+      - vis

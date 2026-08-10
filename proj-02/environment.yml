@@ -6,7 +6,7 @@ channels:
 dependencies:
   - python=3.11.5
   - pip
-  - numpy
+  - numpy<2.0
   - scipy
   - matplotlib
   - ipython
@@ -14,7 +14,8 @@ dependencies:
   - tqdm
   - scikit-image
   - pip:
-      - torch==2.1.2 torchvision==0.16.2 --index-url https://download.pytorch.org/whl/cu118
+      - torch==2.1.2 --index-url https://download.pytorch.org/whl/cu118
+      - torchvision==0.16.2 --index-url https://download.pytorch.org/whl/cu118
       - pylops
       - deepwave
       - opencv-python

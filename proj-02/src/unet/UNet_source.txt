@@ -1,1 +1,0 @@
-UNet implementation is taken from https://github.com/milesial/Pytorch-UNet

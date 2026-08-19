@@ -1,34 +1,22 @@
-name: project-env
+name: deepinvhessian
 channels:
-  - conda-forge
+  - pytorch
+  - nvidia
   - defaults
 dependencies:
-  # core 
-  - python=3.10
-  - pip 
-  # essentials
-  - numpy
+  - python=3.11.5
+  - pip
+  - numpy<2.0
   - scipy
   - matplotlib
-  - pandas
-  - pyyaml
-  - pillow
-  - tqdm
   - ipython
-  - jupyterlab
-  - ipykernel
-  - ipywidgets
-  # notebook diff/merge
-  - nbdime
-  # seismic tools
-  - segyio         
-  - obspy         
+  - jupyter
+  - tqdm
+  - scikit-image
   - pip:
-      # PyTorch family 
-      - torch==2.8.*
-      - torchvision==0.23.*
-      # Deepwave (explicit pin)
-      - deepwave==0.0.22
-      # utilities
-      - sympy
-      - torchsummary
+      - torch==2.1.2 --index-url https://download.pytorch.org/whl/cu118
+      - torchvision==0.16.2 --index-url https://download.pytorch.org/whl/cu118
+      - pylops
+      - deepwave
+      - opencv-python
+      - setuptools-scm

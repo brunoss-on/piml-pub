@@ -84,7 +84,7 @@ def show_one_iter_fwi_custom(
 
     if save_path is not None:
         fig.savefig(
-            f'{save_path}/fwi_iter_{iteration+1}.png',
+            f'{save_path}/bb_iter_{iteration+1}.png',
             bbox_inches='tight',
             dpi=300,
         )
